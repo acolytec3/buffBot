@@ -19,7 +19,7 @@ const pairs = {
 };
 
 export const makeTrade = async (req: Request): Promise<Response> => {
-  const trade = (await req.json()) as Order; //@ts-ignore
+  const trade = (await req.json()) as Order; //@ts-ignore because I'm lazy and eth-sdk doesn't play nice with Deno
   const buffer: Buffer = getArbitrumOneSdk(signer).buffer;
   let contract = "";
 
