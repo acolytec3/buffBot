@@ -51,5 +51,6 @@ If all goes well, you should see a transction logged to the console indicating a
 
 ## Notes
 
+- This bot assumes you have alread approved the Buffer contract to use USDC on the wallet you provide to it.  Make sure you go to [Buffer Finance](https://app.buffer.finance) and approve USDC before trying to use this bot.
 - The access token is not required but will help secure your bot from random griefers testing out their trading strategies
 - There is a hardcoded 5 second cool down period between trades.  So, if your TradingView alert gets triggered more than once per 5 seconds, every alert after the first will be ignored until the cooldown period passes
