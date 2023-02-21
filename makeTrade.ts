@@ -12,6 +12,7 @@ type Order = {
   pair: string;
   price: string;
   direction: string;
+  accessToken?: string;
 };
 
 const pairs = {
@@ -19,7 +20,13 @@ const pairs = {
 };
 
 export const makeTrade = async (req: Request): Promise<Response> => {
-  const trade = (await req.json()) as Order; //@ts-ignore because I'm lazy and eth-sdk doesn't play nice with Deno
+  const trade = (await req.json()) as Order; 
+  if (config.accessToken && trade.accessToken !== config.accessToken) {
+    // If an accessToken is provided, verify access token before processing trade
+    return new Response(undefined, { status: 401 });
+  }
+  
+  //@ts-ignore because I'm lazy and eth-sdk doesn't play nice with Deno
   const buffer: Buffer = getArbitrumOneSdk(signer).buffer;
   let contract = "";
 

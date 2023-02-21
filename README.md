@@ -11,7 +11,8 @@ Copy the below into it and replace with your details.
 ```json
 {
     "key": "MySuperSecretPrivateKey",  // This is the private key you want to trade with
-    "alchemyKey": "My_Alchemy_API_key" // Create a free Alchemy account and put your api key here
+    "alchemyKey": "My_Alchemy_API_key", // Create a free Alchemy account and put your api key here
+    "accessToken": "mySecretAccessToken" // Any arbitrary string, longer is better
 }
 ```
 - Install [ngrok](https://ngrok.com/)
@@ -41,7 +42,9 @@ Copy the forwarding address that ends in `.ngrok.io`
 - Click on the `Notifications` tab
 - Paste the `ngrok` address into the `Webhook URL` field and make sure it has a checkmark next to it
 - Select `Settings`
-- Paste `{"pair":"{{ticker}}", "price": "{{close}}", "direction": "above"}` in the alert message box.  This will trigger a "long" option trade.  Change direction to "below" to do "short" options.
+- Paste `{"pair":"{{ticker}}", "price": "{{close}}", "direction": "above", "accessToken": "mySuperSecretAccessToken"}` in the alert message box.  This will trigger a "long" option trade.  
+  - Change direction to "below" to do "short" options.  
+  - Replace the access token string with the one from your `config.json` above
 - Set your trigger condition and start the alert.
 
 ## See results
