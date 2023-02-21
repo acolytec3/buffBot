@@ -43,7 +43,7 @@ export const makeTrade = async (req: Request): Promise<Response> => {
       "",
       0
     );
-    console.log(gas)
+
       const gasPrice = await provider.getGasPrice();
       const nonce = await provider.getTransactionCount(signer.address)
       const tradeRes = await buffer.estimateGas.initiateTrade(
