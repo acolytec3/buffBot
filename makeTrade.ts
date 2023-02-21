@@ -1,13 +1,13 @@
 import "https://deno.land/x/dotenv@v3.2.0/load.ts";
 import { getArbitrumOneSdk } from "./.dethcrypto/eth-sdk-client/esm/index.js";
 import { ethers } from "npm:ethers@5.7.2";
-import config from "./config.json" assert { type: "json" };
 import type { Buffer } from "./.dethcrypto/eth-sdk-client/esm/types/arbitrumOne/Buffer.d.ts";
 const provider = new ethers.providers.EtherscanProvider(
   "arbitrum",
-  config.alchemyKey
+  Deno.env.get("ALCHEMYKEY")
 );
-const signer = new ethers.Wallet(config.key, provider);
+const signer = new ethers.Wallet(Deno.env.get("KEY")!, provider);
+const accessToken = Deno.env.get("ACCESSTOKEN")
 type Order = {
   pair: string;
   price: string;
@@ -21,11 +21,11 @@ const pairs = {
 
 export const makeTrade = async (req: Request): Promise<Response> => {
   const trade = (await req.json()) as Order; 
-  if (config.accessToken && trade.accessToken !== config.accessToken) {
+  if (accessToken && trade.accessToken !== accessToken) {
     // If an accessToken is provided, verify access token before processing trade
     return new Response(undefined, { status: 401 });
   }
-  
+
   //@ts-ignore because I'm lazy and eth-sdk doesn't play nice with Deno
   const buffer: Buffer = getArbitrumOneSdk(signer).buffer;
   let contract = "";

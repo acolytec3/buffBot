@@ -6,14 +6,12 @@ This a proof of concept trading bot/interface for the Buffer Finance protocol th
 
 - Clone this repo
 - Install [deno](https://deno.land/)
-- Create a `config.json` in the directory root
+- Create a `.env` in the directory root following [.env.example](./.env.example)
 Copy the below into it and replace with your details.
-```json
-{
-    "key": "MySuperSecretPrivateKey",  // This is the private key you want to trade with
-    "alchemyKey": "My_Alchemy_API_key", // Create a free Alchemy account and put your api key here
-    "accessToken": "mySecretAccessToken" // Any arbitrary string, longer is better
-}
+```sh
+KEY=mySuperSecretPrivateKey // This is the private key of the wallet you want to trade with
+ALCHEMYKEY=myAlchemyKey // Create a free Alchemy account and put your api key here
+ACCESSTOKEN=mySuperSecretAccessToken // Any arbitrary string, longer is better
 ```
 - Install [ngrok](https://ngrok.com/)
 
@@ -50,3 +48,8 @@ Copy the forwarding address that ends in `.ngrok.io`
 ## See results
 
 If all goes well, you should see a transction logged to the console indicating a trade was submitted.
+
+## Notes
+
+- The access token is not required but will help secure your bot from random griefers testing out their trading strategies
+- There is a hardcoded 5 second cool down period between trades.  So, if your TradingView alert gets triggered more than once per 5 seconds, every alert after the first will be ignored until the cooldown period passes
