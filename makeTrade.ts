@@ -13,6 +13,8 @@ type Order = {
   price: string;
   direction: string;
   accessToken?: string;
+  size?: string;
+  duration?: string
 };
 
 const pairs = {
@@ -90,8 +92,8 @@ export const makeTrade = async (req: Request): Promise<Response> => {
     const gasPrice = await provider.getGasPrice();
     const nonce = await provider.getTransactionCount(signer.address);
     const tradeRes = await buffer.estimateGas.initiateTrade(
-      "1000000", // Trade value is 1 USDC
-      "300", // Timelimit is 5 minutes (5 * 60 seconds)
+      trade.size ? (1000000 * parseInt(trade.size)).toString() : "1000000", // Trade value is 1 USDC
+      trade.duration ? (60 * parseInt(trade.duration)).toString() : "300", // Timelimit is 5 minutes (5 * 60 seconds)
       trade.direction === "above", // Trade is "long" if alert from TV is "above", otherwise "short"
       contract, // Matched to the pair from TV alert
       parseFloat(trade.price) * 10 ** 8, // Current price times 10^8 - Contract uses 8 decimal places
